@@ -8,9 +8,8 @@ import java.util.List;
 
 
 import static java.util.stream.Collectors.toList;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 
 /**
@@ -25,7 +24,7 @@ public class ExerciceHamcrest {
         Boolean result =  pizzas.stream().anyMatch(p -> p.getPrice() >= 1300);
 
         // vérifier que result vaut true
-        assertThat(result, is(true));
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -37,7 +36,7 @@ public class ExerciceHamcrest {
                 .collect(toList());
 
         // valider que result a 3 éléments
-        assertThat(result, hasSize(3));
+        assertThat(result).hasSize(3);
     }
 
 
@@ -48,7 +47,7 @@ public class ExerciceHamcrest {
         Pizza result = pizzas.stream().max(Comparator.comparing(Pizza::getPrice)).orElseThrow();
 
         // valider que result a la propriété name qui vaut "La Cannibale"
-        assertThat(result, hasProperty("name", is("La Cannibale")));
+        assertThat(result).hasFieldOrPropertyWithValue("name", "La Cannibale");
     }
 
     @Test
@@ -60,7 +59,7 @@ public class ExerciceHamcrest {
                 .collect(toList());
 
         // valider que tous les objets Pizza de la liste result ont un prix >= 1300
-        assertThat(result, everyItem(hasProperty("price", greaterThanOrEqualTo(1300))));
+        assertThat(result).allMatch(p -> p.getPrice() >= 1300);
     }
 
 }
